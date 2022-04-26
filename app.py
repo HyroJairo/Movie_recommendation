@@ -2,6 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
+import requests
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -27,6 +28,21 @@ cm = CountVectorizer().fit_transform(movies['important_features'])
 
 #Get the cosine similarity matrix from the count matrix
 cs = cosine_similarity(cm)
+
+#Gets the poster of the movie
+def get_poster(title):
+  title = title.replace(" ", "+")
+  print(title)
+  url = 'https://api.themoviedb.org/3/search/movie?api_key=02677c02e0ecdad391d2da9f8943cd61&query=' + title
+  print(url)
+  response = requests.get(url)
+  data = response.json()
+  url = "https://image.tmdb.org/t/p/w500/" + data['results'][0]['poster_path']
+  return url
+
+#02677c02e0ecdad391d2da9f8943cd61
+#https://api.themoviedb.org/3/search/movie?api_key=02677c02e0ecdad391d2da9f8943cd61&query=Jack+Reacher
+get_poster('Pulp Fiction')
 
 #Get the title of the movie that the user likes
 def recommend(title):
@@ -59,5 +75,26 @@ movies_list['Series_Title'].values)
 
 if st.button('Recommend'):
     recommendations = recommend(selected_movie)
-    for i in recommendations:
-        st.write(i)
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+      st.text(recommendations[0])
+      st.image(get_poster(recommendations[0]))
+    with col2:
+      st.text(recommendations[1])
+      st.image(get_poster(recommendations[1]))
+    with col3:
+      st.text(recommendations[2])
+      st.image(get_poster(recommendations[2]))
+    with col4:
+      st.text(recommendations[3])
+      st.image(get_poster(recommendations[3]))
+    with col1:
+      st.text(recommendations[4])
+      st.image(get_poster(recommendations[4]))
+    with col2:
+      st.text(recommendations[5])
+      st.image(get_poster(recommendations[5]))
+    with col3:
+      st.text(recommendations[6])
+      st.image(get_poster(recommendations[6]))      
+   
