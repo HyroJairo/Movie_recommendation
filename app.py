@@ -6,6 +6,10 @@ import requests
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
+from pyecharts.charts import Bar
+from pyecharts import options as opts
+import streamlit.components.v1 as components
+
 #Read the list
 movies = pd.read_csv('imdb_top_1000.csv')
 
@@ -40,8 +44,7 @@ def get_poster(title):
   url = "https://image.tmdb.org/t/p/w500/" + data['results'][0]['poster_path']
   return url
 
-#02677c02e0ecdad391d2da9f8943cd61
-#https://api.themoviedb.org/3/search/movie?api_key=02677c02e0ecdad391d2da9f8943cd61&query=Jack+Reacher
+
 get_poster('Pulp Fiction')
 
 #Get the title of the movie that the user likes
@@ -67,7 +70,7 @@ def recommend(title):
 movies_list = pickle.load(open('movies.pkl', 'rb'))
 movies_list = pd.DataFrame(movies_list)
 
-st.title("Movie Recommendation System")
+st.title("Highly Acclaimed Movie Recommendation System")
 
 
 selected_movie = st.selectbox('Pick a movie that you like',
@@ -97,4 +100,31 @@ if st.button('Recommend'):
     with col3:
       st.text(recommendations[6])
       st.image(get_poster(recommendations[6]))      
-   
+
+
+
+genre_list = ["Action", "Adventure", "Animation", "Biography",
+              "Comedy", "Crime", "Drama", "Family",
+              "Fantasy", "Film-Noir", "Horror", "Musical",
+              "Mystery", "Romance", "Sci-Fi", "Thriller",
+              "War", "Western"]
+genre_count = []
+for y in genre_list:
+  count = 0
+  for x in movies["Genre"]:
+    if y in x:
+      count += 1
+  genre_count.append(count)
+
+
+
+
+if st.button("See total movies based on genre"):
+
+  c = (Bar()
+      .add_xaxis(genre_list)
+      .add_yaxis('Hover on bar to see genre', genre_count)
+      .set_global_opts(title_opts=opts.TitleOpts(title="Total Movies By Genre"))
+      .render_embed() # generate a local HTML file
+  )
+  components.html(c, width=1000, height=1000)
