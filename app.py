@@ -117,10 +117,7 @@ for y in genre_list:
   genre_count.append(count)
 
 
-
-
 if st.button("See total movies based on genre"):
-
   c = (Bar()
       .add_xaxis(genre_list)
       .add_yaxis('Hover on bar to see genre', genre_count)
