@@ -44,9 +44,6 @@ def get_poster(title):
   url = "https://image.tmdb.org/t/p/w500/" + data['results'][0]['poster_path']
   return url
 
-
-get_poster('Pulp Fiction')
-
 #Get the title of the movie that the user likes
 def recommend(title):
     #Find the movie id
