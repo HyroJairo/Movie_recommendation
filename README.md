@@ -1,4 +1,5 @@
 # Movie_recommendation
+![Screen Shot 2022-10-31 at 1 33 09 AM (2)](https://user-images.githubusercontent.com/26586658/198939101-9cf9da75-9e25-434c-8f60-7b89faad40fe.png)
 
 ## Description
  This project uses app where it contains an engine where if a user selects a movie a from a critical acclaimed library (that is made up of the top 1000 list according to IMDB) it will output 7 recommendation. There is another feature to it where you can see how many movies there are based on genres in a bar graph. The purpose of the project is to learn about machine learning that powers the project and to learn more about it and how projects are usually created in general
